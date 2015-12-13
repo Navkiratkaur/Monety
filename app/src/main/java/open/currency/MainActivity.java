@@ -20,30 +20,24 @@
 package open.currency;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.desmond.asyncmanager.AsyncManager;
-import com.desmond.asyncmanager.TaskRunnable;
+import com.afollestad.async.Action;
+import com.afollestad.bridge.Bridge;
 
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import jlelse.simpleui.SimpleActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends SimpleActivity {
 
     EditText currency1, currency2;
     int cur1, cur2;
@@ -55,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setToolbarEnabled(true);
 
         curarray = getResources().getStringArray(R.array.currencies);
 
@@ -96,8 +92,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fabCalculate = (FloatingActionButton) findViewById(R.id.fab_calculate);
-        fabCalculate.setOnClickListener(new View.OnClickListener() {
+        setFabEnabled(true);
+        setFabDrawable(ContextCompat.getDrawable(this, R.drawable.ic_arrow_forward_white_48dp));
+        setFabListener(new View.OnClickListener() {
 
             Double c1value;
 
@@ -113,53 +110,40 @@ public class MainActivity extends AppCompatActivity {
                 } else if (curarray[cur1].equals(curarray[cur2])) {
                     new AlertDialog.Builder(MainActivity.this).setMessage("Same currency!").show();
                 } else {
-                    AsyncManager.runBackgroundTask(new TaskRunnable<Void, Double, Void>() {
+                    Action<Double> doCalculate = new Action<Double>() {
+                        @NonNull
                         @Override
-                        public Double doLongOperation(Void aVoid) throws InterruptedException {
+                        public String id() {
+                            return "calculate";
+                        }
+
+                        @Nullable
+                        @Override
+                        protected Double run() throws InterruptedException {
                             return calculate(curarray[cur1], curarray[cur2], c1value);
                         }
 
                         @Override
-                        public void callback(Double aDouble) {
-                            currency2.setText(aDouble.toString());
+                        protected void done(@Nullable Double result) {
+                            if (result != null) {
+                                currency2.setText(result.toString());
+                            }
                         }
-                    });
+                    };
+                    doCalculate.execute();
                 }
             }
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.action_settings:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     public double calculate(String currency, String desiredCurrency, double value) {
         double returnValue = Double.valueOf("0");
         try {
-            URL url = new URL("http://api.fixer.io/latest?base=" + currency);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
+            JSONObject jsonObject = Bridge.get("http://api.fixer.io/latest?base=%s", currency).asJsonObject();
+            if (jsonObject != null) {
+                jsonObject = jsonObject.getJSONObject("rates");
+                returnValue = jsonObject.getDouble(desiredCurrency) * value;
             }
-            reader.close();
-            urlConnection.disconnect();
-            returnValue = (new JSONObject(sb.toString()).getJSONObject("rates").getDouble(desiredCurrency)) * value;
         } catch (Exception e) {
             e.printStackTrace();
         }

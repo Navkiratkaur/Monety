@@ -19,5 +19,4 @@
 
 <resources>
     <string name="app_name">OpenCurrency</string>
-    <string name="action_settings">Settings</string>
 </resources>

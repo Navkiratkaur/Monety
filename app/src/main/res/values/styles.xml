@@ -17,9 +17,4 @@
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<resources>
-
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-    </style>
-
-</resources>
+<resources />
