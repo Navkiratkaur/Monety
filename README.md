@@ -11,11 +11,12 @@ Because OpenCurrency is still in development you can't download and install it y
 ## Main contributors
 
 * Jan-Lukas Else ([@jlelse][1])
-* Krystian ([@KrisGroove][2])
 
 ## Used dependencies
 
-* AsyncManager (https://github.com/boxme/AsyncManager/)
+* SimpleUI ([GitHub repo][2])
+* Bridge ([GitHub repo][3])
+* Async ([GitHub repo][4])
 
 ## License
 
@@ -43,4 +44,6 @@ Please take care about the license of OpenCurrency. Like all OpenAppsProject's p
 To see all projects by OpenAppsProject visit https://github.com/OpenAppsProject.
 
 [1]: https://github.com/jlelse
-[2]: https://github.com/KrisGroove
+[2]: https://github.com/jlelse/SimpleUI/
+[3]: https://github.com/afollestad/bridge
+[4]: https://github.com/afollestad/async
