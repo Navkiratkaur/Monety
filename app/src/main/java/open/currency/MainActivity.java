@@ -39,11 +39,11 @@ import jlelse.simpleui.SimpleActivity;
 
 public class MainActivity extends SimpleActivity {
 
-    EditText currency1, currency2;
-    int cur1, cur2;
-    String[] curarray;
-    Spinner spinner1, spinner2;
-    ArrayAdapter<CharSequence> adapter;
+    private EditText currency1;
+    private EditText currency2;
+    private int cur1;
+    private int cur2;
+    private String[] currencyArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class MainActivity extends SimpleActivity {
 
         setToolbarEnabled(true);
 
-        curarray = getResources().getStringArray(R.array.currencies);
+        currencyArray = getResources().getStringArray(R.array.currencies);
 
         cur1 = 0;
         cur2 = 0;
@@ -60,10 +60,10 @@ public class MainActivity extends SimpleActivity {
         currency1 = (EditText) findViewById(R.id.currency1);
         currency2 = (EditText) findViewById(R.id.currency2);
 
-        spinner1 = (Spinner) findViewById(R.id.spinner1);
-        spinner2 = (Spinner) findViewById(R.id.spinner2);
+        Spinner spinner1 = (Spinner) findViewById(R.id.spinner1);
+        Spinner spinner2 = (Spinner) findViewById(R.id.spinner2);
 
-        adapter = ArrayAdapter.createFromResource(this, R.array.currencies, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.currencies, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner1.setAdapter(adapter);
@@ -71,7 +71,7 @@ public class MainActivity extends SimpleActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 cur1 = position;
-                currency1.setHint(curarray[position]);
+                currency1.setHint(currencyArray[position]);
             }
 
             @Override
@@ -84,7 +84,7 @@ public class MainActivity extends SimpleActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 cur2 = position;
-                currency2.setHint(curarray[position]);
+                currency2.setHint(currencyArray[position]);
             }
 
             @Override
@@ -106,9 +106,9 @@ public class MainActivity extends SimpleActivity {
                     c1value = Double.valueOf("0");
                 }
                 if (c1value.equals(Double.valueOf("0"))) {
-                    new AlertDialog.Builder(MainActivity.this).setMessage("Empty value!").show();
-                } else if (curarray[cur1].equals(curarray[cur2])) {
-                    new AlertDialog.Builder(MainActivity.this).setMessage("Same currency!").show();
+                    new AlertDialog.Builder(MainActivity.this).setMessage(R.string.empty_value).show();
+                } else if (currencyArray[cur1].equals(currencyArray[cur2])) {
+                    new AlertDialog.Builder(MainActivity.this).setMessage(R.string.sam_cur).show();
                 } else {
                     Action<Double> doCalculate = new Action<Double>() {
                         @NonNull
@@ -120,13 +120,13 @@ public class MainActivity extends SimpleActivity {
                         @Nullable
                         @Override
                         protected Double run() throws InterruptedException {
-                            return calculate(curarray[cur1], curarray[cur2], c1value);
+                            return calculate(currencyArray[cur1], currencyArray[cur2], c1value);
                         }
 
                         @Override
                         protected void done(@Nullable Double result) {
                             if (result != null) {
-                                currency2.setText(result.toString());
+                                currency2.setText(String.valueOf(result));
                             }
                         }
                     };
@@ -136,10 +136,10 @@ public class MainActivity extends SimpleActivity {
         });
     }
 
-    public double calculate(String currency, String desiredCurrency, double value) {
+    private double calculate(String currency, String desiredCurrency, double value) {
         double returnValue = Double.valueOf("0");
         try {
-            JSONObject jsonObject = Bridge.get("http://api.fixer.io/latest?base=%s", currency).asJsonObject();
+            JSONObject jsonObject = Bridge.get(getResources().getString(R.string.req_url), currency).asJsonObject();
             if (jsonObject != null) {
                 jsonObject = jsonObject.getJSONObject("rates");
                 returnValue = jsonObject.getDouble(desiredCurrency) * value;

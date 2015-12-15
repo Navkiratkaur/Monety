@@ -17,56 +17,48 @@
   ~     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="@dimen/activity_margin">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <LinearLayout
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="100dp"
+                android:layout_height="50dp" />
+
+            <EditText
+                android:id="@+id/currency1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Spinner
-                    android:id="@+id/spinner1"
-                    android:layout_width="100dp"
-                    android:layout_height="50dp" />
-
-                <EditText
-                    android:id="@+id/currency1"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:inputType="numberDecimal" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Spinner
-                    android:id="@+id/spinner2"
-                    android:layout_width="100dp"
-                    android:layout_height="50dp" />
-
-                <EditText
-                    android:id="@+id/currency2"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:inputType="numberDecimal" />
-
-            </LinearLayout>
-
+                android:layout_height="50dp"
+                android:inputType="numberDecimal" />
         </LinearLayout>
-    </ScrollView>
-</RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/spinner2"
+                android:layout_width="100dp"
+                android:layout_height="50dp" />
+
+            <EditText
+                android:id="@+id/currency2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:inputType="numberDecimal" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

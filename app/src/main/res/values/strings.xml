@@ -19,4 +19,7 @@
 
 <resources>
     <string name="app_name">OpenCurrency</string>
+    <string name="empty_value">Empty value!</string>
+    <string name="sam_cur">Same currency!</string>
+    <string name="req_url">http://api.fixer.io/latest?base=%s</string>
 </resources>
