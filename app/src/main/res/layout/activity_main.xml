@@ -85,8 +85,6 @@
                     android:inputType="numberDecimal" />
 
             </android.support.design.widget.TextInputLayout>
-
-
         </RelativeLayout>
     </LinearLayout>
 </ScrollView>

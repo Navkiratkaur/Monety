@@ -36,6 +36,8 @@ import com.afollestad.bridge.Bridge;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import jlelse.simpleui.SimpleActivity;
 
 public class MainActivity extends SimpleActivity {
@@ -139,7 +141,7 @@ public class MainActivity extends SimpleActivity {
     private double calculate(String currency, String desiredCurrency, double value) {
         double returnValue = Double.valueOf("0");
         try {
-            JSONObject jsonObject = Bridge.get(getResources().getString(R.string.req_url), currency).asJsonObject();
+            JSONObject jsonObject = Bridge.get("http://api.fixer.io/latest?base=%s&symbols=%s", currency, desiredCurrency).asJsonObject();
             if (jsonObject != null) {
                 jsonObject = jsonObject.getJSONObject("rates");
                 returnValue = jsonObject.getDouble(desiredCurrency) * value;
@@ -148,5 +150,10 @@ public class MainActivity extends SimpleActivity {
             e.printStackTrace();
         }
         return returnValue;
+    }
+
+    private ArrayList<Integer> getHistory() {
+        ArrayList<Integer> allValues = new ArrayList<>(20);
+        return null;
     }
 }
