@@ -22,8 +22,9 @@ package open.currency;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,10 +40,9 @@ import jlelse.simpleui.SimpleActivity;
 
 public class MainActivity extends SimpleActivity {
 
-    private EditText currency1;
-    private EditText currency2;
-    private int cur1;
-    private int cur2;
+    private EditText currency1, currency2;
+    private TextInputLayout tilCur1, tilCur2;
+    private int cur1, cur2;
     private String[] currencyArray;
 
     @Override
@@ -54,11 +54,11 @@ public class MainActivity extends SimpleActivity {
 
         currencyArray = getResources().getStringArray(R.array.currencies);
 
-        cur1 = 0;
-        cur2 = 0;
-
         currency1 = (EditText) findViewById(R.id.currency1);
         currency2 = (EditText) findViewById(R.id.currency2);
+
+        tilCur1 = (TextInputLayout) findViewById(R.id.tilCur1);
+        tilCur2 = (TextInputLayout) findViewById(R.id.tilCur2);
 
         Spinner spinner1 = (Spinner) findViewById(R.id.spinner1);
         Spinner spinner2 = (Spinner) findViewById(R.id.spinner2);
@@ -71,7 +71,7 @@ public class MainActivity extends SimpleActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 cur1 = position;
-                currency1.setHint(currencyArray[position]);
+                tilCur1.setHint(currencyArray[position]);
             }
 
             @Override
@@ -84,7 +84,7 @@ public class MainActivity extends SimpleActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 cur2 = position;
-                currency2.setHint(currencyArray[position]);
+                tilCur2.setHint(currencyArray[position]);
             }
 
             @Override
@@ -96,19 +96,19 @@ public class MainActivity extends SimpleActivity {
         setFabDrawable(ContextCompat.getDrawable(this, R.drawable.ic_arrow_forward_white_48dp));
         setFabListener(new View.OnClickListener() {
 
-            Double c1value;
+            Double c1value = Double.valueOf("0");
 
             @Override
             public void onClick(View v) {
                 try {
                     c1value = Double.valueOf(currency1.getText().toString());
-                } catch (Exception ignored) {
-                    c1value = Double.valueOf("0");
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 if (c1value.equals(Double.valueOf("0"))) {
-                    new AlertDialog.Builder(MainActivity.this).setMessage(R.string.empty_value).show();
-                } else if (currencyArray[cur1].equals(currencyArray[cur2])) {
-                    new AlertDialog.Builder(MainActivity.this).setMessage(R.string.sam_cur).show();
+                    Snackbar.make(v, R.string.empty_value, Snackbar.LENGTH_LONG).show();
+                } else if (cur1 == cur2) {
+                    Snackbar.make(v, R.string.sam_cur, Snackbar.LENGTH_LONG).show();
                 } else {
                     Action<Double> doCalculate = new Action<Double>() {
                         @NonNull
