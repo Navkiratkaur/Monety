@@ -47,5 +47,5 @@ To see all projects by OpenAppsProject visit https://github.com/OpenAppsProject.
 [2]: https://github.com/jlelse/SimpleUI/
 [3]: https://github.com/afollestad/bridge
 [4]: https://github.com/afollestad/async
-[5]: https://play.google.com/store/apps/details?id=jlelse.readit
+[5]: https://play.google.com/store/apps/details?id=open.currency
 [6]: http://fixer.io/

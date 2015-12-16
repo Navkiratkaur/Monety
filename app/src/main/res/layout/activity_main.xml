@@ -86,5 +86,13 @@
 
             </android.support.design.widget.TextInputLayout>
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/link_github"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_margin"
+            android:gravity="center"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
     </LinearLayout>
 </ScrollView>

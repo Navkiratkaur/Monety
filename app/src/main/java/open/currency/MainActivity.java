@@ -26,12 +26,15 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.afollestad.async.Action;
 import com.afollestad.bridge.Bridge;
@@ -53,6 +56,12 @@ public class MainActivity extends SimpleActivity {
         setContentView(R.layout.activity_main);
 
         setToolbarEnabled(true);
+
+        String desGithub = "Visit the  <a href='http://openappsproject.github.io/OpenCurrency/'>project page</a> to get more information about OpenCurrency.<br/><br/>© 2015 - 2016 OpenAppsProject";
+        TextView desTV = (TextView) findViewById(R.id.link_github);
+        desTV.setLinksClickable(true);
+        desTV.setMovementMethod(LinkMovementMethod.getInstance());
+        desTV.setText(Html.fromHtml(desGithub));
 
         currencyArray = getResources().getStringArray(R.array.currencies);
 
