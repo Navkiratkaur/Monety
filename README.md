@@ -1,12 +1,12 @@
 # OpenCurrency
 
-A very simple currency converter for Android
+A very simple OPEN SOURCE currency converter for Android
 
 ## About this project
 
 OpenCurrency is the first project of the OpenAppsProject, a community of developers, who love to code great apps and programs and share them with the public.
-With OpenCurrency you are able to convert almost every currency into another one, thanks to the great API by fixer.io, which provides the latest official rates by the European Central Bank.
-Because OpenCurrency is still in development you can't download and install it yet. But this will come soon...
+With OpenCurrency you are able to convert almost every currency into another one, thanks to the great API by [fixer.io][6], which provides the latest official rates by the European Central Bank.
+You can find OpenCurrency on [Google Play][5].
 
 ## Main contributors
 
@@ -47,3 +47,5 @@ To see all projects by OpenAppsProject visit https://github.com/OpenAppsProject.
 [2]: https://github.com/jlelse/SimpleUI/
 [3]: https://github.com/afollestad/bridge
 [4]: https://github.com/afollestad/async
+[5]: https://play.google.com/store/apps/details?id=jlelse.readit
+[6]: http://fixer.io/

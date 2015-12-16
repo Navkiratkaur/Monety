@@ -25,6 +25,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -36,15 +38,13 @@ import com.afollestad.bridge.Bridge;
 
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 import jlelse.simpleui.SimpleActivity;
 
 public class MainActivity extends SimpleActivity {
 
     private EditText currency1, currency2;
     private TextInputLayout tilCur1, tilCur2;
-    private int cur1, cur2;
+    private int cur1, cur2, lastEdited;
     private String[] currencyArray;
 
     @Override
@@ -67,6 +67,36 @@ public class MainActivity extends SimpleActivity {
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.currencies, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        lastEdited = 1;
+        currency1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                lastEdited = 1;
+            }
+        });
+        currency2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                lastEdited = 2;
+            }
+        });
 
         spinner1.setAdapter(adapter);
         spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -95,22 +125,32 @@ public class MainActivity extends SimpleActivity {
         });
 
         setFabEnabled(true);
-        setFabDrawable(ContextCompat.getDrawable(this, R.drawable.ic_arrow_forward_white_48dp));
+        setFabDrawable(ContextCompat.getDrawable(this, R.drawable.ic_check_white_48dp));
         setFabListener(new View.OnClickListener() {
 
-            Double c1value = Double.valueOf("0");
+            Double inputValue = Double.valueOf("0");
 
             @Override
             public void onClick(View v) {
+                currency1.setEnabled(false);
+                currency2.setEnabled(false);
                 try {
-                    c1value = Double.valueOf(currency1.getText().toString());
+                    if (lastEdited == 1) {
+                        inputValue = Double.valueOf(currency1.getText().toString());
+                    } else {
+                        inputValue = Double.valueOf(currency2.getText().toString());
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if (c1value.equals(Double.valueOf("0"))) {
+                if (inputValue.equals(Double.valueOf("0"))) {
                     Snackbar.make(v, R.string.empty_value, Snackbar.LENGTH_LONG).show();
+                    currency1.setEnabled(true);
+                    currency2.setEnabled(true);
                 } else if (cur1 == cur2) {
                     Snackbar.make(v, R.string.sam_cur, Snackbar.LENGTH_LONG).show();
+                    currency1.setEnabled(true);
+                    currency2.setEnabled(true);
                 } else {
                     Action<Double> doCalculate = new Action<Double>() {
                         @NonNull
@@ -122,14 +162,24 @@ public class MainActivity extends SimpleActivity {
                         @Nullable
                         @Override
                         protected Double run() throws InterruptedException {
-                            return calculate(currencyArray[cur1], currencyArray[cur2], c1value);
+                            if (lastEdited == 1) {
+                                return calculate(currencyArray[cur1], currencyArray[cur2], inputValue);
+                            } else {
+                                return calculate(currencyArray[cur2], currencyArray[cur1], inputValue);
+                            }
                         }
 
                         @Override
                         protected void done(@Nullable Double result) {
                             if (result != null) {
-                                currency2.setText(String.valueOf(result));
+                                if (lastEdited == 1) {
+                                    currency2.setText(String.valueOf(result));
+                                } else {
+                                    currency1.setText(String.valueOf(result));
+                                }
                             }
+                            currency1.setEnabled(true);
+                            currency2.setEnabled(true);
                         }
                     };
                     doCalculate.execute();
@@ -150,10 +200,5 @@ public class MainActivity extends SimpleActivity {
             e.printStackTrace();
         }
         return returnValue;
-    }
-
-    private ArrayList<Integer> getHistory() {
-        ArrayList<Integer> allValues = new ArrayList<>(20);
-        return null;
     }
 }

@@ -47,5 +47,4 @@ dependencies {
     compile 'com.github.jlelse:SimpleUI:0.4'
 	compile 'com.github.afollestad:async:0.2.0'
     compile 'com.github.afollestad:bridge:2.0.0'
-    compile 'com.github.jlelse:AndroidCharts:1.0'
 }
