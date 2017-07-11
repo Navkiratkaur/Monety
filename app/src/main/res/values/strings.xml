@@ -23,4 +23,6 @@
 	<string name="sam_cur">Same currency!</string>
 	<string name="about">© 2015 – 2017 jlelse</string>
 	<string name="convert">Convert</string>
+	<string name="other_cur">This also equals %1$s.</string>
+	<string name="start">Start converting to also see the value in other currencies.</string>
 </resources>
