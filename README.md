@@ -1,30 +1,28 @@
-# OpenCurrency
+# Monety - Simple Currency Converter
 
 A very simple OPEN SOURCE currency converter for Android
 
 ## About this project
 
-OpenCurrency is the first project of the OpenAppsProject, a community of developers, who love to code great apps and programs and share them with the public.
-With OpenCurrency you are able to convert almost every currency into another one, thanks to the great API by [fixer.io][6], which provides the latest official rates by the European Central Bank.
-You can find OpenCurrency on [Google Play][5].
+With Monety you are able to convert almost every currency into another one, thanks to the great API by [fixer.io][6], which provides the latest official rates by the European Central Bank.
 
-## Main contributors
+Available currencies: AUD, BGN, BRL, CAD, CHF, CNY, CZK, DKK, GBP, HKD, HRK, HUF, IDR, ILS, INR, JPY, KRW, MXN, MYR, NOK, NZD, PHP, PLN, RON, RUB, SEK, SGD, THB, TRY, USD, ZAR
+
+The app absolutely respects your privacy by having no type of tracking or advertisements!
+
+The app is written in Kotlin and licensed under the GNU Public License V3.
+
+You can find Monety on [Google Play][5].
+
+## Developer
 
 * Jan-Lukas Else ([@jlelse][1])
 
-## Used dependencies
-
-* SimpleUI ([GitHub repo][2])
-* Bridge ([GitHub repo][3])
-* Async ([GitHub repo][4])
-
 ## License
 
-Please take care about the license of OpenCurrency. Like all OpenAppsProject's projects, OpenCurrency is licensed under the GNU Public License V3. You have to redistribute every modifications you do to this project!
+     Monety, a very simple currency converter for Android
 
-     OpenCurrency, a very simple currency converter for Android
-
-     Copyright (C) 2015  Jan-Lukas Else (github@jlelse.eu)
+     Copyright (C) 2015 - 2017  Jan-Lukas Else
 
      This program is free software: you can redistribute it and/or modify
      it under the terms of the GNU General Public License as published by
@@ -39,13 +37,6 @@ Please take care about the license of OpenCurrency. Like all OpenAppsProject's p
      You should have received a copy of the GNU General Public License
      along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-## More OpenAppsProject projects
-
-To see all projects by OpenAppsProject visit https://github.com/OpenAppsProject.
-
 [1]: https://github.com/jlelse
-[2]: https://github.com/jlelse/SimpleUI/
-[3]: https://github.com/afollestad/bridge
-[4]: https://github.com/afollestad/async
 [5]: https://play.google.com/store/apps/details?id=open.currency
 [6]: http://fixer.io/
