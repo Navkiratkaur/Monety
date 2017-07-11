@@ -18,7 +18,9 @@
   -->
 
 <resources>
-    <string name="app_name">OpenCurrency</string>
-    <string name="empty_value">Empty value!</string>
-    <string name="sam_cur">Same currency!</string>
+	<string name="app_name">Monety</string>
+	<string name="empty_value">Empty value!</string>
+	<string name="sam_cur">Same currency!</string>
+	<string name="about">© 2015 – 2017 jlelse</string>
+	<string name="convert">Convert</string>
 </resources>
