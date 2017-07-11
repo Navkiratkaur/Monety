@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
 	}
 
 	private fun calculate(editText: EditText?, currency: String, desiredCurrency: String, value: Double) {
-		Bridge.get("http://api.fixer.io/latest?base=%s&symbols=%s", currency, desiredCurrency)
+		Bridge.get("https://api.fixer.io/latest?base=%s&symbols=%s", currency, desiredCurrency)
 				.asAsonObject { _, ason, _ ->
 					val returnValue = ason?.getDouble("rates." + desiredCurrency) ?: 0.toDouble()
 					editText?.setText((returnValue * value).toString())
