@@ -19,8 +19,8 @@
 
 buildscript {
     ext.APP_ID = "open.currency"
-    ext.VERSION_NAME = "2.0.0"
-    ext.VERSION_CODE = 2
+    ext.VERSION_NAME = "2.0.1"
+    ext.VERSION_CODE = 3
     ext.TARGET_SDK = 26
     ext.MIN_SDK = 17
     ext.BUILD_TOOLS = "26.0.0"
